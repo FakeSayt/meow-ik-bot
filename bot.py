@@ -22,8 +22,10 @@ async def load_commands():
 
 @bot.event
 async def on_ready():
-    await bot.tree.sync()
+    # Najpierw załaduj komendy
     await load_commands()
+    # Teraz synchronizuj je z Discordem
+    await bot.tree.sync()
     print(f"Logged in as {bot.user} | Slash commands synced")
 
 bot.run(config.DISCORD_TOKEN)
