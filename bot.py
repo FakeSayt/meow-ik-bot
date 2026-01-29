@@ -33,274 +33,53 @@ if not openai_api_key:
 client = OpenAI(api_key=openai_api_key)
 
 # =====================================================
-# HERO BUILDS DICTIONARY (pełna lista Immortali)
+# HEROES DICTIONARY (full + short)
 # =====================================================
-HERO_BUILDS = {
-    "wukong": """✨ TL;DR – Best Artifact for Wukong
-{
-    "heart of spiritual stone": """✨ TL;DR – Best Artifact
-⭐ Best Artifact: Heart of Spiritual Stone
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "louis ix": """✨ TL;DR – Best Artifact for Louis IX
-⭐ Best Artifact: Justice Grasp
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "tutankhamun": """✨ TL;DR – Best Artifact for Tutankhamun
-⭐ Best Artifact: Meteoric Dagger
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "khubilai khan": """✨ TL;DR – Best Artifact for Khubilai Khan
-⭐ Best Artifact: The Code of Yuan
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "manco": """✨ TL;DR – Best Artifact for Manco
-⭐ Best Artifact: Barricade of Light
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "alexander the great": """✨ TL;DR – Best Artifact for Alexander the Great
-⭐ Best Artifact: Homer’s Epic
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "hippolyta": """✨ TL;DR – Best Artifact for Hippolyta
-⭐ Best Artifact: Godesses’ Waist Belt
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "william": """✨ TL;DR – Best Artifact for William
-⭐ Best Artifact: The Domesday Book
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "attila the hun": """✨ TL;DR – Best Artifact for Attila the Hun
-⭐ Best Artifact: Celestial’s Blade
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "saladin": """✨ TL;DR – Best Artifact for Saladin
-⭐ Best Artifact: Wings of War
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "muhammad ii": """✨ TL;DR – Best Artifact for Muhammad II
-⭐ Best Artifact: Code of Order
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "siegfried": """✨ TL;DR – Best Artifact for Siegfried
-⭐ Best Artifact: Dark Dragon’s Blood
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "peter the great": """✨ TL;DR – Best Artifact for Peter the Great
-⭐ Best Artifact: Justice Grasp
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "ramesses ii": """✨ TL;DR – Best Artifact for Ramesses II
-⭐ Best Artifact: The Sun’s Gift
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "hannibal barca": """✨ TL;DR – Best Artifact for Hannibal Barca
-⭐ Best Artifact: The War Colossus
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "herald": """✨ TL;DR – Best Artifact for Herald
-⭐ Best Artifact: Figurehead of War Dragon
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "frederick": """✨ TL;DR – Best Artifact for Frederick
-⭐ Best Artifact: Crown of Flame
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "loki": """✨ TL;DR – Best Artifact for Loki
-⭐ Best Artifact: Inferno Crown
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "hammurabi": """✨ TL;DR – Best Artifact for Hammurabi
-⭐ Best Artifact: The Totem of Order
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "himiko": """✨ TL;DR – Best Artifact for Himiko
-⭐ Best Artifact: The Golden Seal
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Annihilation
-🔁 Alternative Passive: Destruction""",
-
-    "empress wu": """✨ TL;DR – Best Artifact for Empress Wu
-⭐ Best Artifact: Locana Buddha
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "baldwin iv": """✨ TL;DR – Best Artifact for Baldwin IV
-⭐ Best Artifact: The Silver Mask of Baldwin
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "merlin": """✨ TL;DR – Best Artifact for Merlin
-⭐ Best Artifact: Dragon’s Prophecy
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "cleopatra": """✨ TL;DR – Best Artifact for Cleopatra
-⭐ Best Artifact: The Eternal Serpent
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "bjorn": """✨ TL;DR – Best Artifact for Bjorn
-⭐ Best Artifact: Source of Terror
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "king arthur": """✨ TL;DR – Best Artifact for King Arthur
-⭐ Best Artifact: Scabbard of Avalon
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "el cid": """✨ TL;DR – Best Artifact for El Cid
-⭐ Best Artifact: The Song of the Cid
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "leonidas": """✨ TL;DR – Best Artifact for Leonidas
-⭐ Best Artifact: Titan’s Prove
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "julius caesar": """✨ TL;DR – Best Artifact for Julius Caesar
-⭐ Best Artifact: Julian Calendar
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "charles": """✨ TL;DR – Best Artifact for Charles
-⭐ Best Artifact: Grasps of Glory
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "ragnar": """✨ TL;DR – Best Artifact for Ragnar
-⭐ Best Artifact: War Helm
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "trajan": """✨ TL;DR – Best Artifact for Trajan
-⭐ Best Artifact: Trajan’s Column
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "tokugawa": """✨ TL;DR – Best Artifact for Tokugawa
-⭐ Best Artifact: Golden Blunderbuss
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "gilgamesh": """✨ TL;DR – Best Artifact for Gilgamesh
-⭐ Best Artifact: Uluk Relief
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "elizabeth bathory": """✨ TL;DR – Best Artifact for Elizabeth Bathory
-⭐ Best Artifact: Vampire’s Glass
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "yoshitsune": """✨ TL;DR – Best Artifact for Yoshitsune
-⭐ Best Artifact: Scroll of the Tiger
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "yi seong-gye": """✨ TL;DR – Best Artifact for Yi Seong-gye
-⭐ Best Artifact: The Code of Gyeongguk
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "ashoka": """✨ TL;DR – Best Artifact for Ashoka
-⭐ Best Artifact: The Legendary Pillar
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "genghis khan": """✨ TL;DR – Best Artifact for Genghis Khan
-⭐ Best Artifact: Great Code of Genghis Khan
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "arash": """✨ TL;DR – Best Artifact for Arash
-⭐ Best Artifact: Champion’s Arrow
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "atalanta": """✨ TL;DR – Best Artifact for Atalanta
-⭐ Best Artifact: Protection of the Moon
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "seondeok": """✨ TL;DR – Best Artifact for Seondeok
-⭐ Best Artifact: Endless Artwork
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "margaret i": """✨ TL;DR – Best Artifact for Margaret I
-⭐ Best Artifact: Alliance Seal
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
-
-    "nebuchadnezzar ii": """✨ TL;DR – Best Artifact for Nebuchadnezzar II
-⭐ Best Artifact: The Ishtar Gate
-⚔️ Best Main Stat: Unknown
-⚡ Best Passive Roll: Unknown
-🔁 Alternative Passive: Unknown""",
+HERO_INFO = {
+    "wukong": {"full": "Wukong", "short": "Wuk"},
+    "louis ix": {"full": "Louis IX", "short": "Louis"},
+    "tutankhamun": {"full": "Tutankhamun", "short": "Tut"},
+    "khubilai khan": {"full": "Khubilai Khan", "short": "Khan"},
+    "manco": {"full": "Manco", "short": "Manco"},
+    "alexander the great": {"full": "Alexander The Great", "short": "Alex"},
+    "hippolyta": {"full": "Hippolyta", "short": "Hip"},
+    "william": {"full": "William", "short": "Will"},
+    "attila the hun": {"full": "Attila The Hun", "short": "Attila"},
+    "saladin": {"full": "Saladin", "short": "Sal"},
+    "muhammad ii": {"full": "Muhammad II", "short": "Muh"},
+    "siegfried": {"full": "Siegfried", "short": "Sieg"},
+    "peter the great": {"full": "Peter The Great", "short": "Peter"},
+    "ramesses ii": {"full": "Ramesses II", "short": "Ram"},
+    "hannibal barca": {"full": "Hannibal Barca", "short": "Hann"},
+    "herald": {"full": "Herald", "short": "Herald"},
+    "frederick": {"full": "Frederick", "short": "Fred"},
+    "loki": {"full": "Loki", "short": "Loki"},
+    "hammurabi": {"full": "Hammurabi", "short": "Ham"},
+    "himiko": {"full": "Himiko", "short": "Him"},
+    "empress wu": {"full": "Empress Wu", "short": "Wu"},
+    "baldwin iv": {"full": "Baldwin IV", "short": "Bald"},
+    "merlin": {"full": "Merlin", "short": "Mer"},
+    "cleopatra": {"full": "Cleopatra", "short": "Cleo"},
+    "bjorn": {"full": "Bjorn", "short": "Bjorn"},
+    "king arthur": {"full": "King Arthur", "short": "Arthur"},
+    "el cid": {"full": "El Cid", "short": "Cid"},
+    "leonidas": {"full": "Leonidas", "short": "Leo"},
+    "julius caesar": {"full": "Julius Caesar", "short": "JC"},
+    "charles": {"full": "Charles", "short": "Char"},
+    "ragnar": {"full": "Ragnar", "short": "Rag"},
+    "trajan": {"full": "Trajan", "short": "Traj"},
+    "tokugawa": {"full": "Tokugawa", "short": "Toku"},
+    "gilgamesh": {"full": "Gilgamesh", "short": "Gil"},
+    "elizabeth bathory": {"full": "Elizabeth Bathory", "short": "Liz"},
+    "yoshitsune": {"full": "Yoshitsune", "short": "Yoshi"},
+    "yi seong-gye": {"full": "Yi Seong-Gye", "short": "Yi"},
+    "ashoka": {"full": "Ashoka", "short": "Ash"},
+    "genghis khan": {"full": "Genghis Khan", "short": "GK"},
+    "arash": {"full": "Arash", "short": "Arash"},
+    "atalanta": {"full": "Atalanta", "short": "Ata"},
+    "seondeok": {"full": "Seondeok", "short": "Seon"},
+    "margaret i": {"full": "Margaret I", "short": "Marg"},
+    "nebuchadnezzar ii": {"full": "Nebuchadnezzar II", "short": "Neb"}
 }
 
 # =====================================================
@@ -311,24 +90,28 @@ def ai_fill_unknowns(hero_name: str, build_text: str):
         return build_text
 
     prompt = f"""
-You are an expert in the game Infinity Kingdom. Only use actual in-game data.
-The hero is "{hero_name}".
-Here is the current TL;DR build:
+Infinity Kingdom only use actual in-game artifact data.
+Hero: {hero_name}
+
+Reference artifact stats:
+Primary rolls: Physical Attack %, Magical Attack %, Crit Rate %, Crit Damage %, Defense %, Health %, etc.
+Secondary rolls: Physical Attack %, Magical Attack %, Crit Rate %, Dodge Rate %, Block Rate %, Defense %, HP %, Healing %, etc.
+Bonus rolls: Iron Fist, Annihilation, Deadly, Growth, Guard, Shining Light, Surge, Eternal, etc.
+
+Current TL;DR build (fill Unknowns only):
 
 {build_text}
 
-Please fill in the Unknown fields (⭐ Best Artifact for example for Genghis Khan is it Iron Fist Or Annihilation /⚡ Best Passive Roll (cavalry attack % etc doesn't exist in artifacts stats please make sure it's correct / 🔁 Alternative Passive (cavalry attack % etc doesn't exist in artifacts stats please make sure it's correct / ⚔️ Best Main Stat (for mages like Merlin, Himiko it's Crit % and 2nd/alternative passive is % magic damage so please check thsi also.) with accurate Infinity Kingdom mobile game..
-Do NOT invent artifacts. Only provide valid stats or passives. Respond ONLY with the updated TL;DR build in the exact same format.
-If unknown, leave it as 'Unknown'.
+Please fill only valid artifact stats or passives according to official Infinity Kingdom game data. Do NOT invent artifacts. Respond ONLY with the updated TL;DR build in the same format. Leave 'Unknown' if data is not available.
 """
 
     try:
         response = client.chat.completions.create(
-    model="gpt-4-turbo",
-    messages=[{"role": "user", "content": prompt}],
-    temperature=0.0,
-    max_tokens=200
-)
+            model="gpt-4-turbo",
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.0,
+            max_tokens=300
+        )
         content = response.choices[0].message.content.strip()
         return content if content else build_text
     except Exception as e:
@@ -337,20 +120,22 @@ If unknown, leave it as 'Unknown'.
         return build_text
 
 # =====================================================
-# GET BUILD FUNCTION
+# GET HERO BUILD
 # =====================================================
 def get_hero_build(name: str):
     name_lower = name.lower()
-    build = HERO_BUILDS.get(name_lower)
-    if not build:
-        return f"""✨ TL;DR – Best Artifact for {name.title()}
+    hero_info = HERO_INFO.get(name_lower, {"full": name.title(), "short": name.title()})
+    hero_full = hero_info["full"]
+    hero_short = hero_info["short"]
+
+    build_text = f"""✨ TL;DR – Best Artifact for {hero_full}
 ⭐ Best Artifact: Unknown
 ⚔️ Best Main Stat: Unknown
 ⚡ Best Passive Roll: Unknown
 🔁 Alternative Passive: Unknown"""
-    
-    build_filled = ai_fill_unknowns(name, build)
-    return build_filled
+
+    build_filled = ai_fill_unknowns(hero_full, build_text)
+    return hero_full, hero_short, build_filled
 
 # =====================================================
 # DISCORD BOT
@@ -386,14 +171,14 @@ async def bestartifact(interaction: discord.Interaction, immortal: str):
         return
 
     try:
-        build_text = await asyncio.to_thread(get_hero_build, name)
+        hero_full, hero_short, build_text = await asyncio.to_thread(get_hero_build, name)
     except Exception as e:
         print("[ERROR] Failed to get build:", repr(e))
         await interaction.followup.send("Error fetching artifact build.")
         return
 
     embed = discord.Embed(
-        title=f"✨ TL;DR – Best Artifact for {name.title()}",
+        title=f"✨ TL;DR – Best Artifact for {hero_short}",
         description=build_text,
         color=discord.Color.gold()
     )
