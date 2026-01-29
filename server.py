@@ -1,6 +1,6 @@
 from flask import Flask
 from threading import Thread
-from config import PORT
+import config
 
 app = Flask(__name__)
 
@@ -9,7 +9,6 @@ def home():
     return "Discord bot is running!"
 
 def run_web():
-    app.run(host="0.0.0.0", port=PORT)
+    app.run(host="0.0.0.0", port=config.PORT)
 
-def start_server():
-    Thread(target=run_web).start()
+Thread(target=run_web).start()

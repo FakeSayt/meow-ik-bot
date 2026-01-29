@@ -1,3 +1,4 @@
+import asyncio
 from heroes import HERO_BUILDS
 from ai_helper import ai_fill_unknowns
 
@@ -11,4 +12,5 @@ def get_hero_build(name: str):
 ⚡ Best Passive Roll: Unknown
 🔁 Alternative Passive: Unknown"""
     
-    return ai_fill_unknowns(name, build)
+    build_filled = asyncio.run(asyncio.to_thread(ai_fill_unknowns, name, build))
+    return build_filled

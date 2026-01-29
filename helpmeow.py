@@ -1,32 +1,19 @@
 import discord
 from discord import app_commands
 
-class HelpMeowCommand(app_commands.Group):
-    @app_commands.command(
+async def setup(bot):
+    @bot.tree.command(
         name="helpmeow",
-        description="Show all available bot commands and how to use them"
+        description="Show all available commands and usage"
     )
-    async def helpmeow(self, interaction: discord.Interaction):
+    async def helpmeow(interaction: discord.Interaction):
         embed = discord.Embed(
-            title="📜 IK Bot Commands Help",
-            color=discord.Color.blue(),
-            description="Here are the available commands and how to use them:"
+            title="Bot Commands Help",
+            description="""
+/bestartifact <immortal> - Get TL;DR best artifact build
+/damage <immortal1> <immortal2> - Compare ultimate damage of two mages
+/helpmeow - Show this help
+""",
+            color=discord.Color.blue()
         )
-
-        embed.add_field(
-            name="/bestartifact <immortal>",
-            value="Get the best artifact build for any immortal.\nExample: `/bestartifact Himiko`",
-            inline=False
-        )
-        embed.add_field(
-            name="/damage <mage1> <mage2>",
-            value="Compare two mage immortals ultimate damage.\nExample: `/damage Merlin Himiko`",
-            inline=False
-        )
-        embed.add_field(
-            name="/helpmeow",
-            value="Show this help message.",
-            inline=False
-        )
-
-        await interaction.response.send_message(embed=embed, ephemeral=True)
+        await interaction.response.send_message(embed=embed)
