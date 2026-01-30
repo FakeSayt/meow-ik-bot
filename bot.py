@@ -2,10 +2,9 @@ import os
 import discord
 from discord.ext import commands
 from threading import Thread
-from flask import Flask
-import asyncio
 import config
 import server
+import asyncio
 
 # =====================================================
 # DISCORD BOT SETUP
@@ -15,19 +14,22 @@ intents.message_content = True
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 # =====================================================
-# LOAD COMMANDS
+# IMPORT COMMANDS
 # =====================================================
-async def load_commands():
-    import bestartifact, damage, helpmeow
-    await bestartifact.setup(bot)
-    await damage.setup(bot)
-    await helpmeow.setup(bot)
+from bestartifact import setup as bestartifact_setup
+from damage import setup as damage_setup
+from helpmeow import setup as helpmeow_setup
 
 @bot.event
 async def on_ready():
-    await load_commands()
+    # Rejestracja wszystkich komend
+    await bestartifact_setup(bot)
+    await damage_setup(bot)
+    await helpmeow_setup(bot)
+
+    # Synchronizacja komend z Discordem
     await bot.tree.sync()
-    print(f"Logged in as {bot.user} | Commands synced")
+    print(f"Bot is ready! Logged in as {bot.user}")
 
 # =====================================================
 # RUN BOT
