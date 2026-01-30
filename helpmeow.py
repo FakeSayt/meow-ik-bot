@@ -1,19 +1,14 @@
-import discord
-from discord import app_commands
+from discord import app_commands, Interaction
 
 async def setup(bot):
-    @bot.tree.command(
-        name="helpmeow",
-        description="Show all available commands and usage"
-    )
-    async def helpmeow(interaction: discord.Interaction):
-        embed = discord.Embed(
-            title="Bot Commands Help",
-            description="""
-/bestartifact <immortal> - Get TL;DR best artifact build
-/damage <immortal1> <immortal2> - Compare ultimate damage of two mages
-/helpmeow - Show this help
-""",
-            color=discord.Color.blue()
-        )
+    @bot.tree.command(name="helpmeow", description="Show available commands")
+    async def helpmeow(interaction: Interaction):
+        embed = {
+            "title": "Available Commands",
+            "description": (
+                "/bestartifact – Get best artifact build for any immortal\n"
+                "/damage – Compare two mage immortal damage\n"
+                "/helpmeow – Show this help menu"
+            ),
+        }
         await interaction.response.send_message(embed=embed)
