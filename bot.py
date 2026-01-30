@@ -1,10 +1,23 @@
 import os
+from threading import Thread
+from flask import Flask
 import discord
 from discord.ext import commands
-from threading import Thread
-import config
-import server
-import asyncio
+from config import DISCORD_TOKEN, PORT
+
+# =====================================================
+# FLASK SERVER (KEEP-ALIVE)
+# =====================================================
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Discord bot is running!"
+
+def run_web():
+    app.run(host="0.0.0.0", port=PORT)
+
+Thread(target=run_web).start()
 
 # =====================================================
 # DISCORD BOT SETUP
@@ -14,24 +27,32 @@ intents.message_content = True
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 # =====================================================
-# IMPORT COMMANDS
+# LOAD EXTENSIONS / COMMANDS
 # =====================================================
-from bestartifact import setup as bestartifact_setup
-from damage import setup as damage_setup
-from helpmeow import setup as helpmeow_setup
+async def load_extensions():
+    # Ensure these files exist in the same directory
+    import bestartifact
+    import damage
+    import helpmeow
 
+    await bestartifact.setup(bot)
+    await damage.setup(bot)
+    await helpmeow.setup(bot)
+
+# =====================================================
+# ON_READY EVENT
+# =====================================================
 @bot.event
 async def on_ready():
-    # Rejestracja wszystkich komend
-    await bestartifact_setup(bot)
-    await damage_setup(bot)
-    await helpmeow_setup(bot)
-
-    # Synchronizacja komend z Discordem
+    await load_extensions()
+    # Synchronize slash commands to Discord
     await bot.tree.sync()
-    print(f"Bot is ready! Logged in as {bot.user}")
+    print(f"{bot.user} is online and all commands are synced!")
 
 # =====================================================
 # RUN BOT
 # =====================================================
-bot.run(config.DISCORD_TOKEN)
+if not DISCORD_TOKEN:
+    raise ValueError("DISCORD_TOKEN environment variable is missing!")
+
+bot.run(DISCORD_TOKEN)
