@@ -30,14 +30,10 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 # LOAD EXTENSIONS / COMMANDS
 # =====================================================
 async def load_extensions():
-    # Ensure these files exist in the same directory
-    import bestartifact
-    import damage
-    import helpmeow
-
-    await bestartifact.setup(bot)
-    await damage.setup(bot)
-    await helpmeow.setup(bot)
+    """Load all cogs (slash commands)"""
+    await bot.load_extension("bestartifact")
+    await bot.load_extension("damage")
+    await bot.load_extension("helpmeow")
 
 # =====================================================
 # ON_READY EVENT
@@ -45,9 +41,20 @@ async def load_extensions():
 @bot.event
 async def on_ready():
     await load_extensions()
-    # Synchronize slash commands to Discord
-    await bot.tree.sync()
-    print(f"{bot.user} is online and all commands are synced!")
+
+    # Optionally sync slash commands to a specific guild for instant update
+    # Replace with your test server ID
+    GUILD_ID = None  # e.g., 123456789012345678
+    if GUILD_ID:
+        guild = discord.Object(id=GUILD_ID)
+        await bot.tree.sync(guild=guild)
+        print(f"Slash commands synced to guild {GUILD_ID}")
+    else:
+        # Global sync (may take up to 1 hour to appear)
+        await bot.tree.sync()
+        print("Global slash commands synced")
+
+    print(f"{bot.user} is online and ready!")
 
 # =====================================================
 # RUN BOT
